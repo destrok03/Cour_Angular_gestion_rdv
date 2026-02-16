@@ -1,0 +1,57 @@
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4"><i class="bi bi-person-circle"></i> Mon Profil</h1>
+            
+            @if(patient) {
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-hash"></i> Numéro Patient</label>
+                                <p class="fw-bold">{{ patient.numero }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-envelope"></i> Email</label>
+                                <p class="fw-bold">{{ patient.email }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-person"></i> Nom</label>
+                                <p class="fw-bold">{{ patient.nom }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-person"></i> Prénom</label>
+                                <p class="fw-bold">{{ patient.prenom }}</p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-telephone"></i> Téléphone</label>
+                                <p class="fw-bold">{{ patient.tel }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted"><i class="bi bi-geo-alt"></i> Adresse</label>
+                                <p class="fw-bold">{{ patient.adresse }}</p>
+                            </div>
+                        </div>
+
+                        @if(patient.antecedents) {
+                            <div class="mb-3">
+                                <label class="form-label text-muted"><i class="bi bi-file-text"></i> Antécédents Médicaux</label>
+                                <p class="fw-bold">{{ patient.antecedents }}</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            } @else {
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Aucune information patient disponible
+                </div>
+            }
+        </div>
+    </div>
+</div>
