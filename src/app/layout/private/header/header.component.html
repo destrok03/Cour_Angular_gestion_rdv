@@ -1,0 +1,39 @@
+
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm mb-4" style="background: linear-gradient(90deg,#0d6efd,#0069d9);">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center text-white" routerLink="/dash">
+                <i class="bi bi-building-fill fs-4 me-2"></i>
+                <span class="fw-bold">Gestion RV Médicaux</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboardNavbar" aria-controls="dashboardNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="dashboardNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-white " routerLinkActive="active" routerLink="/private/dash">Tableau de bord</a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-white"  routerLinkActive="active" routerLink="/private/create-demande">Demander RV</a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-white" routerLinkActive="active" routerLink="/private/liste-demande-rv">Mes Demandes</a>
+                    </li>
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-white"   routerLinkActive="active" routerLink="/drv">Mes RV</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-light text-white dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Patient
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
