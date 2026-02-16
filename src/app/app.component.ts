@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { HeaderComponent } from './layout/header/header.component';
+import { DashboardComponent } from './features/private/dashboard/dashboard.component';
+import { HeaderComponent } from './layout/private/header/header.component';
  
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

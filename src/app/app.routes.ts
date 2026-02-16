@@ -1,23 +1,10 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './features/dashboard/dashboard.component';
-import { DemandeRvComponent } from './features/demande-rv/demande-rv.component';
-import { FormDemandeComponent } from './features/demande-rv/form-demande/form-demande.component';
-
+import { publicRoutes } from './features/public/public-routing';
+import { privateRoutes } from './features/private/private-routing';
 
 export const routes: Routes = [
-    {
-        path: 'dash',
-        component: DashboardComponent
-    },
-    {
-        path: 'drv',
-        component: DemandeRvComponent
-    },
-    {
-        path: 'form-demande',
-        component: FormDemandeComponent
-    },
-    
-
-
+  ...publicRoutes,
+  ...privateRoutes,
+  { path: '', redirectTo: '/public/', pathMatch: 'full' },
+  { path: '**', redirectTo: '/public/login', pathMatch: 'full' }
 ];

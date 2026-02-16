@@ -1,0 +1,140 @@
+ <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="mb-4"><i class="bi bi-person-plus"></i> Créer un Nouveau Patient</h1>
+                
+                @if(successMessage) {
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                }
+                
+                @if(errorMessage) {
+                    <div class="alert alert-danger" role="alert">
+                        {{ errorMessage }}
+                    </div>
+                }
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form (ngSubmit)="onSubmit()" #patientForm="ngForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="numero" class="form-label"><i class="bi bi-hash"></i> Numéro Patient *</label>
+                                    <input type="text" class="form-control" id="numero" 
+                                           [(ngModel)]="patient.numero" name="numero"
+                                           placeholder="PAT-001" required
+                                           [class.is-invalid]="numero.invalid && numero.touched"
+                                           #numero="ngModel">
+                                    @if(numero.invalid && numero.touched) {
+                                        <div class="invalid-feedback">Le numéro est requis</div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="nom" class="form-label"><i class="bi bi-person"></i> Nom *</label>
+                                    <input type="text" class="form-control" id="nom" 
+                                           [(ngModel)]="patient.nom" name="nom"
+                                           placeholder="Dupont" required minlength="2"
+                                           [class.is-invalid]="nom.invalid && nom.touched"
+                                           #nom="ngModel">
+                                    @if(nom.invalid && nom.touched) {
+                                        <div class="invalid-feedback">Le nom est requis (min 2 caractères)</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="prenom" class="form-label"><i class="bi bi-person"></i> Prénom *</label>
+                                    <input type="text" class="form-control" id="prenom" 
+                                           [(ngModel)]="patient.prenom" name="prenom"
+                                           placeholder="Jean" required minlength="2"
+                                           [class.is-invalid]="prenom.invalid && prenom.touched"
+                                           #prenom="ngModel">
+                                    @if(prenom.invalid && prenom.touched) {
+                                        <div class="invalid-feedback">Le prénom est requis (min 2 caractères)</div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label"><i class="bi bi-envelope"></i> Email *</label>
+                                    <input type="email" class="form-control" id="email" 
+                                           [(ngModel)]="patient.email" name="email"
+                                           placeholder="patient@gmail.com" required email
+                                           [class.is-invalid]="email.invalid && email.touched"
+                                           #email="ngModel">
+                                    @if(email.invalid && email.touched) {
+                                        <div class="invalid-feedback">Email valide requis</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="tel" class="form-label"><i class="bi bi-telephone"></i> Téléphone *</label>
+                                    <input type="tel" class="form-control" id="tel" 
+                                           [(ngModel)]="patient.tel" name="tel"
+                                           placeholder="+221 77 123 45 67" required
+                                           [class.is-invalid]="tel.invalid && tel.touched"
+                                           #tel="ngModel">
+                                    @if(tel.invalid && tel.touched) {
+                                        <div class="invalid-feedback">Le téléphone est requis</div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="adresse" class="form-label"><i class="bi bi-geo-alt"></i> Adresse *</label>
+                                    <input type="text" class="form-control" id="adresse" 
+                                           [(ngModel)]="patient.adresse" name="adresse"
+                                           placeholder="Rue, Code postal, Ville" required
+                                           [class.is-invalid]="adresse.invalid && adresse.touched"
+                                           #adresse="ngModel">
+                                    @if(adresse.invalid && adresse.touched) {
+                                        <div class="invalid-feedback">L'adresse est requise</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="antecedents" class="form-label"><i class="bi bi-file-text"></i> Antécédents Médicaux</label>
+                                <textarea class="form-control" id="antecedents" rows="4" 
+                                          [(ngModel)]="patient.antecedents" name="antecedents"
+                                          placeholder="Décrivez vos antécédents médicaux, allergies, maladies chroniques..."></textarea>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-secondary" (click)="onCancel()">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </button>
+                                <button type="submit" class="btn btn-primary" [disabled]="!patientForm.valid">
+                                    <i class="bi bi-check-circle"></i> Créer Patient
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-info-circle"></i> Informations</h5>
+                        <p class="card-text small text-muted">
+                            Veuillez remplir tous les champs avec les informations correctes du patient. 
+                        </p>
+                        <hr>
+                        <h6 class="card-subtitle mb-2">Champs requis:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="bi bi-check-circle text-success"></i> Numéro Patient</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Nom (min 2 caractères)</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Prénom (min 2 caractères)</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Email (format valide)</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Téléphone (format valide)</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Adresse</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
