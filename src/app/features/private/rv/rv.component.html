@@ -1,0 +1,64 @@
+<div class="container-fluid py-4">
+  <h1 class="mb-4"><i class="bi bi-calendar-check"></i> Mes Rendez-vous</h1>
+
+  <!-- Filtres -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn" [class.btn-primary]="selectedStatut === 'tous'" 
+                [class.btn-outline-primary]="selectedStatut !== 'tous'"
+                (click)="onFilterChange('tous')">
+          Tous
+        </button>
+        <button type="button" class="btn" [class.btn-warning]="selectedStatut === 'en_attente'" 
+                [class.btn-outline-warning]="selectedStatut !== 'en_attente'"
+                (click)="onFilterChange('en_attente')">
+          En attente
+        </button>
+        <button type="button" class="btn" [class.btn-success]="selectedStatut === 'confirme'" 
+                [class.btn-outline-success]="selectedStatut !== 'confirme'"
+                (click)="onFilterChange('confirme')">
+          Confirmés
+        </button>
+        <button type="button" class="btn" [class.btn-info]="selectedStatut === 'termine'" 
+                [class.btn-outline-info]="selectedStatut !== 'termine'"
+                (click)="onFilterChange('termine')">
+          Terminés
+        </button>
+        <button type="button" class="btn" [class.btn-danger]="selectedStatut === 'annule'" 
+                [class.btn-outline-danger]="selectedStatut !== 'annule'"
+                (click)="onFilterChange('annule')">
+          Annulés
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liste -->
+  @if(filteredRv$ | async; as rvList) {
+    @if(rvList.length > 0) {
+      <div class="row">
+        @for(rv of rvList; track rv.id) {
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title mb-0">{{ rv.motif }}</h5>
+                  <app-badge [text]="getStatutLabel(rv.statut)" [type]="getStatutBadgeType(rv.statut)"></app-badge>
+                </div>
+                <p class="text-muted mb-2">
+                  <i class="bi bi-calendar3"></i> {{ rv.date }} à {{ rv.heure }}
+                </p>
+                <button class="btn btn-sm btn-outline-primary" (click)="voirDetails(rv.id)">
+                  <i class="bi bi-eye"></i> Voir détails
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <app-alerte message="Aucun rendez-vous trouvé pour ce filtre" type="info" icon="info-circle"></app-alerte>
+    }
+  }
+</div>

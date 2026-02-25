@@ -1,0 +1,94 @@
+<div class="container-fluid py-4">
+  @if(rv$ | async; as rv) {
+    <div class="mb-3">
+      <button class="btn btn-outline-secondary" (click)="retour()">
+        <i class="bi bi-arrow-left"></i> Retour
+      </button>
+    </div>
+
+    <h1 class="mb-4"><i class="bi bi-calendar-event"></i> Détails du Rendez-vous</h1>
+
+    <!-- Informations générales -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-info-circle"></i> Informations Générales</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="text-muted">Motif</label>
+            <p class="fw-bold">{{ rv.motif }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted">Statut</label>
+            <div><app-badge [text]="rv.statut" [type]="rv.statut === 'confirme' ? 'success' : rv.statut === 'termine' ? 'info' : rv.statut === 'annule' ? 'danger' : 'warning'"></app-badge></div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted">Date</label>
+            <p class="fw-bold"><i class="bi bi-calendar3"></i> {{ rv.date }}</p>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="text-muted">Heure</label>
+            <p class="fw-bold"><i class="bi bi-clock"></i> {{ rv.heure }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consultation -->
+    @if(rv.consultation) {
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-file-medical"></i> Consultation</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="text-muted">Diagnostic</label>
+            <p class="fw-bold">{{ rv.consultation.diagnostic }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="text-muted">Traitement</label>
+            <p class="fw-bold">{{ rv.consultation.traitement }}</p>
+          </div>
+          @if(rv.consultation.notes) {
+            <div class="mb-3">
+              <label class="text-muted">Notes</label>
+              <p class="fw-bold">{{ rv.consultation.notes }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Ordonnance -->
+    @if(rv.ordonnance) {
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0"><i class="bi bi-prescription2"></i> Ordonnance</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="text-muted">Médicaments</label>
+            <ul class="list-unstyled">
+              @for(med of rv.ordonnance.medicaments; track med) {
+                <li class="fw-bold"><i class="bi bi-capsule"></i> {{ med }}</li>
+              }
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="text-muted">Posologie</label>
+              <p class="fw-bold">{{ rv.ordonnance.posologie }}</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="text-muted">Durée</label>
+              <p class="fw-bold">{{ rv.ordonnance.duree }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  } @else {
+    <app-alerte message="Rendez-vous introuvable" type="danger" icon="exclamation-triangle"></app-alerte>
+  }
+</div>

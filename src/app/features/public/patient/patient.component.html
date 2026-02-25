@@ -1,0 +1,161 @@
+ <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="mb-4"><i class="bi bi-person-plus"></i> Créer un Nouveau Patient</h1>
+                
+                @if(successMessage) {
+                    <div class="alert alert-success" role="alert">
+                        {{ successMessage }}
+                    </div>
+                }
+                
+                @if(errorMessage) {
+                    <div class="alert alert-danger" role="alert">
+                        {{ errorMessage }}
+                    </div>
+                }
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="numero" class="form-label"><i class="bi bi-hash"></i> Numéro Patient *</label>
+                                    <input type="text" class="form-control" id="numero" 
+                                           formControlName="numero"
+                                           placeholder="PAT-001"
+                                           [class.is-invalid]="isFieldInvalid('numero')">
+                                    @if(isFieldInvalid('numero')) {
+                                        <div class="invalid-feedback">Le numéro est requis</div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="nom" class="form-label"><i class="bi bi-person"></i> Nom *</label>
+                                    <input type="text" class="form-control" id="nom" 
+                                           formControlName="nom"
+                                           placeholder="Dupont"
+                                           [class.is-invalid]="isFieldInvalid('nom')">
+                                    @if(isFieldInvalid('nom')) {
+                                        <div class="invalid-feedback">
+                                            @if(f['nom'].errors?.['required']) {
+                                                Le nom est requis
+                                            } @else if(f['nom'].errors?.['minlength']) {
+                                                Minimum 2 caractères
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="prenom" class="form-label"><i class="bi bi-person"></i> Prénom *</label>
+                                    <input type="text" class="form-control" id="prenom" 
+                                           formControlName="prenom"
+                                           placeholder="Jean"
+                                           [class.is-invalid]="isFieldInvalid('prenom')">
+                                    @if(isFieldInvalid('prenom')) {
+                                        <div class="invalid-feedback">
+                                            @if(f['prenom'].errors?.['required']) {
+                                                Le prénom est requis
+                                            } @else if(f['prenom'].errors?.['minlength']) {
+                                                Minimum 2 caractères
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label"><i class="bi bi-envelope"></i> Email *</label>
+                                    <input type="email" class="form-control" id="email" 
+                                           formControlName="email"
+                                           placeholder="patient@gmail.com"
+                                           [class.is-invalid]="isFieldInvalid('email')">
+                                    @if(isFieldInvalid('email')) {
+                                        <div class="invalid-feedback">
+                                            @if(f['email'].errors?.['required']) {
+                                                L'email est requis
+                                            } @else if(f['email'].errors?.['email']) {
+                                                Format email invalide
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="tel" class="form-label"><i class="bi bi-telephone"></i> Téléphone *</label>
+                                    <input type="tel" class="form-control" id="tel" 
+                                           formControlName="tel"
+                                           placeholder="+221 77 123 45 67"
+                                           [class.is-invalid]="isFieldInvalid('tel')">
+                                    @if(isFieldInvalid('tel')) {
+                                        <div class="invalid-feedback">
+                                            @if(f['tel'].errors?.['required']) {
+                                                Le téléphone est requis
+                                            } @else if(f['tel'].errors?.['pattern']) {
+                                                Format invalide (9-15 chiffres)
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="adresse" class="form-label"><i class="bi bi-geo-alt"></i> Adresse *</label>
+                                    <input type="text" class="form-control" id="adresse" 
+                                           formControlName="adresse"
+                                           placeholder="Rue, Code postal, Ville"
+                                           [class.is-invalid]="isFieldInvalid('adresse')">
+                                    @if(isFieldInvalid('adresse')) {
+                                        <div class="invalid-feedback">L'adresse est requise</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="antecedents" class="form-label"><i class="bi bi-file-text"></i> Antécédents Médicaux</label>
+                                <textarea class="form-control" id="antecedents" rows="4" 
+                                          formControlName="antecedents"
+                                          placeholder="Décrivez vos antécédents médicaux, allergies, maladies chroniques..."></textarea>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="button" class="btn btn-secondary" (click)="onReset()">
+                                    <i class="bi bi-arrow-clockwise"></i> Réinitialiser
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </button>
+                                <button type="submit" class="btn btn-primary" [disabled]="patientForm.invalid">
+                                    <i class="bi bi-check-circle"></i> Créer Patient
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-info-circle"></i> Informations</h5>
+                        <p class="card-text small text-muted">
+                            Formulaire Reactive Forms avec validation TypeScript.
+                        </p>
+                        <hr>
+                        <h6 class="card-subtitle mb-2">Validations:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="bi bi-check-circle text-success"></i> Numéro: requis</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Nom: requis, min 2 car.</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Prénom: requis, min 2 car.</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Email: requis, format valide</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Tél: requis, regex pattern</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Adresse: requise</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,85 @@
+<div class="container-fluid py-4">
+  <h1 class="mb-4"><i class="bi bi-folder2-open"></i> Mon Dossier Médical</h1>
+
+  @if(dossier$ | async; as dossier) {
+    <!-- Informations générales -->
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-person-badge"></i> Informations Générales</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="text-muted">Patient</label>
+            <p class="fw-bold">{{ dossier.patientNom }}</p>
+          </div>
+          @if(dossier.groupeSanguin) {
+            <div class="col-md-4 mb-3">
+              <label class="text-muted">Groupe Sanguin</label>
+              <p class="fw-bold">{{ dossier.groupeSanguin }}</p>
+            </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label class="text-muted">Antécédents</label>
+          <p class="fw-bold">{{ dossier.antecedents }}</p>
+        </div>
+        @if(dossier.allergies && dossier.allergies.length > 0) {
+          <div>
+            <label class="text-muted">Allergies</label>
+            <div class="d-flex gap-2 flex-wrap">
+              @for(allergie of dossier.allergies; track allergie) {
+                <span class="badge bg-danger">{{ allergie }}</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Historique consultations -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Historique des Consultations</h5>
+      </div>
+      <div class="card-body">
+        @if(dossier.consultations.length > 0) {
+          @for(consultation of getPaginatedConsultations(dossier.consultations); track consultation.id) {
+            <div class="card mb-3 border-start border-success border-4">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h6 class="card-subtitle text-muted">
+                    <i class="bi bi-calendar3"></i> {{ consultation.date }}
+                  </h6>
+                </div>
+                <div class="mb-2">
+                  <strong>Diagnostic:</strong> {{ consultation.diagnostic }}
+                </div>
+                <div class="mb-2">
+                  <strong>Traitement:</strong> {{ consultation.traitement }}
+                </div>
+                @if(consultation.notes) {
+                  <div class="text-muted">
+                    <small><i class="bi bi-sticky"></i> {{ consultation.notes }}</small>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+          
+          @if(dossier.consultations.length > itemsPerPage) {
+            <app-pagination 
+              [currentPage]="currentPage"
+              [totalPages]="getTotalPages(dossier.consultations.length)"
+              (pageChange)="onPageChange($event)">
+            </app-pagination>
+          }
+        } @else {
+          <app-alerte message="Aucune consultation enregistrée" type="info" icon="info-circle"></app-alerte>
+        }
+      </div>
+    </div>
+  } @else {
+    <app-alerte message="Dossier médical introuvable" type="warning" icon="exclamation-triangle"></app-alerte>
+  }
+</div>
